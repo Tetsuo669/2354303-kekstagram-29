@@ -59,4 +59,38 @@ const getRandomInteger = (a, b) => {
   const result = Math.random() * (upper - lower + 1) + lower;
   return Math.floor(result);
 };
-getRandomInteger();
+export {getRandomInteger};
+
+/* Функция для проверки длительности встречи
+*/
+
+// Извлечёт из `value` цифры.
+function parseDigits(value) {
+  const digits = String(value).replace(/[^0-9]+/g, '');
+
+  return digits ? Number(digits) : NaN;
+}
+
+function isWithinWorkingDay(workStart, workEnd, meetingStart, meetingDuration) {
+  const workStartTime = parseTime(workStart);
+  const workEndTime = parseTime(workEnd);
+  const meetingStartTime = parseTime(meetingStart);
+
+  return (
+    meetingStartTime >= workStartTime &&
+    meetingDuration <= workEndTime - meetingStartTime
+  );
+}
+
+isWithinWorkingDay();
+parseDigits();
+
+// Извлечёт количество минут из строки вида `часы:минуты`.
+
+function parseTime(time) {
+  const parts = time.split(':').map(Number);
+  const [hours, minutes] = parts;
+  const minutesPerHour = 60;
+
+  return hours * minutesPerHour + minutes;
+}
